@@ -1,5 +1,10 @@
 <h1 align="center"> Todolist-Json</center>
 
+# Frame + Tool
+
+- Angular
+- ng-Zorro
+
 
 # Feature
 
