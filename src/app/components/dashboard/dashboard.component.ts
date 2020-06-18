@@ -24,13 +24,13 @@ export class DashboardComponent implements OnInit {
     if (this.todoTitle === '') {
       this.message.info('please input title');
     } else {
-      const item={
+      const item = {
         done: false,
-        title: this.todoTitle
-      }
+        title: this.todoTitle,
+      };
       this.doingArray.push(item);
       this.dataArray.push(item);
-      this.todoTitle='';
+      this.todoTitle = '';
       localStorage.setItem('data', JSON.stringify(this.dataArray));
     }
   }
@@ -49,5 +49,41 @@ export class DashboardComponent implements OnInit {
         }
       }
     }
+  }
+
+  checkItem(data: Object) {
+    const index: number = data['index'];
+    const done: boolean = data['done'];
+
+    const newItem: Object = {
+      title: data['title'],
+      date: data['date'],
+      done: done,
+    };
+
+    if (done) {
+      this.doingArray.splice(index, 1);
+      this.doneArray.push(newItem);
+    }else {
+      this.doneArray.splice(index,1);
+      this.doingArray.push(newItem);
+    }
+
+    this.dataArray = this.doingArray.concat(this.doneArray);
+    localStorage.setItem('data', JSON.stringify(this.dataArray));
+  }
+
+  editItem(data: Object) {}
+
+  deleteItem(data: Object) {
+    const index: number = data['index'];
+    const done: number = data['done'];
+    if(done){
+      this.doneArray.splice(index,1);
+    }else{
+      this.doingArray.splice(index,1);
+    }
+    this.dataArray = this.doingArray.concat(this.doneArray);
+    localStorage.setItem('data', JSON.stringify(this.dataArray));
   }
 }
