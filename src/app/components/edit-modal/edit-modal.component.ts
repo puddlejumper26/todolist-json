@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html',
-  styleUrls: ['./edit-modal.component.scss']
+  styleUrls: ['./edit-modal.component.scss'],
 })
 export class EditModalComponent implements OnInit {
+  isVisible: boolean;
 
-  constructor() { }
+  validateForm:FormGroup;
 
-  ngOnInit(): void {
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  handleCancel() {}
+
+  handleOk() {
+    this.submitForm();
   }
 
+  submitForm(){}
 }
