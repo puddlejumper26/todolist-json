@@ -17,11 +17,17 @@
 
   <h2>Working {{ doingArray.length }}</h2>
   <div *ngFor="let item of doingArray; let i = index" style="margin-top: 15px;">
-    <app-item
+    <!-- <app-item
       [index]="i"
       [title]="item['title']"
       [date]="item['date']"
       [done]="item['done']"
+      (checkItemEvent)="checkItem($event)"
+      (editItemEvent)="editItem($event)"
+      (deleteItemEvent)="deleteItem($event)"
+    ></app-item> -->
+    <app-item
+      [data]="item"
       (checkItemEvent)="checkItem($event)"
       (editItemEvent)="editItem($event)"
       (deleteItemEvent)="deleteItem($event)"
@@ -31,10 +37,7 @@
   <h2>Finished {{ doneArray.length }}</h2>
   <div *ngFor="let item of doneArray; let i = index" style="margin-top: 15px;">
     <app-item
-      [index]="i"
-      [title]="item['title']"
-      [date]="item['date']"
-      [done]="item['done']"
+      [data]="item"
       (checkItemEvent)="checkItem($event)"
       (editItemEvent)="editItem($event)"
       (deleteItemEvent)="deleteItem($event)"
@@ -42,11 +45,16 @@
   </div>
 </div>
 
-<app-edit-modal
+<!-- <app-edit-modal
   [title]="editTitle"
   [date]="editDate"
   [done]="editDone"
   [index]="editIndex"
+  [(isVisible)]="modalIsVisible"
+  (clickEvent)="addTodoEvent($event)"
+></app-edit-modal> -->
+<app-edit-modal
+  [data] = "editData"
   [(isVisible)]="modalIsVisible"
   (clickEvent)="addTodoEvent($event)"
 ></app-edit-modal>

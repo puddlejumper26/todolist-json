@@ -7,17 +7,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./edit-modal.component.scss'],
 })
 export class EditModalComponent {
-  @Input()
-  title: string = '';
-  @Input()
-  date: string = '';
-  @Input()
-  done: string = '';
-  @Input()
-  index: number = 0;
+  // @Input()
+  // title: string = '';
+  // @Input()
+  // date: string = '';
+  // @Input()
+  // done: string = '';
+  // @Input()
+  // index: number = 0;
 
   @Input()
   isVisible: boolean;
+
+  @Input()
+  data: Object = {};
 
   @Output()
   clickEvent = new EventEmitter<Object>();
@@ -36,12 +39,28 @@ export class EditModalComponent {
 
   ngOnInit() { }
 
+  // ngOnChanges() {
+  //   if (this.title) {
+  //     this.isEdit = true;
+  //     this.validateForm.setValue({
+  //       title: this.title,
+  //       date: this.date,
+  //     });
+  //   } else {
+  //     this.isEdit = false;
+  //     this.validateForm.setValue({
+  //       title: '',
+  //       date: '',
+  //     });
+  //   }
+  // }
+
   ngOnChanges() {
-    if (this.title) {
+    if (this.data['id']) {    //           <====
       this.isEdit = true;
       this.validateForm.setValue({
-        title: this.title,
-        date: this.date,
+        title: this.data['title'],    //           <====
+        date: this.data['date'],      //           <====
       });
     } else {
       this.isEdit = false;
@@ -84,10 +103,17 @@ export class EditModalComponent {
     params['date'] = this.validateForm.get('date').value;
     params['isEdit'] = this.isEdit;
 
-    if (this.isEdit) {
-      params['done'] = this.done;
-      params['index'] = this.index;
+    // if (this.isEdit) {
+    //   params['done'] = this.done;
+    //   params['index'] = this.index;
+    // }
+    if(this.isEdit){
+      params['id']=this.data['id'];
+      params['done']=this.data['done'];
+    }else{
+      params['done']=false;
     }
+
 
     this.clickEvent.emit(params);
     this.isVisibleChange.emit(false);
