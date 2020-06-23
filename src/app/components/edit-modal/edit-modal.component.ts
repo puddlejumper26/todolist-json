@@ -8,11 +8,11 @@ import { FormGroup } from '@angular/forms';
 })
 export class EditModalComponent implements OnInit {
   @Input()
-  title: string='';
+  title: string = '';
   @Input()
-  date: string='';
+  date: string = '';
   @Input()
-  done: string='';
+  done: string = '';
   @Input()
   index: number = 0;
 
