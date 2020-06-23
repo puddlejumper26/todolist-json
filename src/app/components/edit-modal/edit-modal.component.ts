@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,9 +7,19 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./edit-modal.component.scss'],
 })
 export class EditModalComponent implements OnInit {
+  @Input()
+  title: string='';
+  @Input()
+  date: string='';
+  @Input()
+  done: string='';
+  @Input()
+  index: number = 0;
+
+  @Input()
   isVisible: boolean;
 
-  validateForm:FormGroup;
+  validateForm: FormGroup;
 
   constructor() {}
 
@@ -21,5 +31,5 @@ export class EditModalComponent implements OnInit {
     this.submitForm();
   }
 
-  submitForm(){}
+  submitForm() {}
 }

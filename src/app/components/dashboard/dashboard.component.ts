@@ -10,9 +10,16 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class DashboardComponent implements OnInit {
   todoTitle: string = '';
 
+  modalVisible: boolean = false;
+
   dataArray: Array<Object> = [];
   doneArray: Array<Object> = [];
   doingArray: Array<Object> = [];
+
+  editTitle: string = '';
+  editDate: string = '';
+  editIndex: number = 0;
+  editDone: boolean = false;
 
   constructor(private message: NzMessageService) {}
 
@@ -33,6 +40,10 @@ export class DashboardComponent implements OnInit {
       this.todoTitle = '';
       localStorage.setItem('data', JSON.stringify(this.dataArray));
     }
+  }
+
+  addTodoEvent(data: Object){
+
   }
 
   getTodoList(): void {
@@ -73,7 +84,13 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('data', JSON.stringify(this.dataArray));
   }
 
-  editItem(data: Object) {}
+  editItem(data: Object) {
+    this.editTitle = data['title'];
+    this.editDate = data['date'];
+    this.editDone = data['done'];
+    this.editIndex = data['index'];
+    this.modalVisible = true;
+  }
 
   deleteItem(data: Object) {
     const index: number = data['index'];
