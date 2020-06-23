@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -15,9 +15,13 @@ export class EditModalComponent implements OnInit {
   done: string = '';
   @Input()
   index: number = 0;
-
   @Input()
   isVisible: boolean;
+
+  @Output()
+  clickEvent = new EventEmitter<Object>();
+  @Output()
+  isVisibleChange = new EventEmitter<boolean>();
 
   validateForm: FormGroup;
 
@@ -25,7 +29,9 @@ export class EditModalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  handleCancel() {}
+  handleCancel() {
+    this.isVisibleChange.emit(false);
+  }
 
   handleOk() {
     this.submitForm();

@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   editDate: string = '';
   editIndex: number = 0;
   editDone: boolean = false;
+  modalIsVisible: boolean = false;
 
   constructor(private message: NzMessageService) {}
 
@@ -27,23 +28,32 @@ export class DashboardComponent implements OnInit {
     this.getTodoList();
   }
 
-  addTodo() {
-    if (this.todoTitle === '') {
-      this.message.info('please input title');
-    } else {
-      const item = {
-        done: false,
-        title: this.todoTitle,
-      };
-      this.doingArray.push(item);
-      this.dataArray.push(item);
-      this.todoTitle = '';
-      localStorage.setItem('data', JSON.stringify(this.dataArray));
-    }
+  addTodo(): void {
+    this.editTitle = '';
+    this.editDate = '';
+    this.editDone = false;
+    this.editIndex = 0;
+    this.modalIsVisible = true;
   }
 
   addTodoEvent(data: Object){
+    const item = {
+      title: data['title'],
+      date: data['date'],
+      done: data['done'],
+    };
 
+    if(data['done'] === true){
+      this.doneArray[data['index']]=item;
+    }else{
+      if(data['isEdit'] === true){
+        this.doingArray[data['index']]=item;
+      }else{
+        this.doingArray.push(item);
+      }
+    }
+    this.dataArray = this.doingArray.concat(this.doneArray);
+    localStorage.setItem('data', JSON.stringify(this.dataArray));
   }
 
   getTodoList(): void {
