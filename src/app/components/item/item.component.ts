@@ -27,7 +27,7 @@ export class ItemComponent implements OnInit {
 
   constructor(private modal: NzModalService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   checkItem(): void{
     const data: Object = {

@@ -24,8 +24,24 @@ export class DashboardComponent implements OnInit {
 
   constructor(private message: NzMessageService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getTodoList();
+  }
+
+  getTodoList(): void {
+    const dataString: string = localStorage.getItem('data');
+
+    if (dataString != null) {
+      this.dataArray = JSON.parse(dataString);
+      for (let i = 0; i < this.dataArray.length; i++) {
+        const element: any = this.dataArray[i];
+        if (element.done === true) {
+          this.doneArray.push(element);
+        } else {
+          this.doingArray.push(element);
+        }
+      }
+    }
   }
 
   addTodo(): void {
@@ -54,22 +70,6 @@ export class DashboardComponent implements OnInit {
     }
     this.dataArray = this.doingArray.concat(this.doneArray);
     localStorage.setItem('data', JSON.stringify(this.dataArray));
-  }
-
-  getTodoList(): void {
-    const dataString: string = localStorage.getItem('data');
-
-    if (dataString != null) {
-      this.dataArray = JSON.parse(dataString);
-      for (let i = 0; i < this.dataArray.length; i++) {
-        const element: any = this.dataArray[i];
-        if (element.done === true) {
-          this.doneArray.push(element);
-        } else {
-          this.doingArray.push(element);
-        }
-      }
-    }
   }
 
   checkItem(data: Object) {
