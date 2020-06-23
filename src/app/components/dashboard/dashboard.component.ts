@@ -45,11 +45,15 @@ export class DashboardComponent implements OnInit {
   }
 
   addTodo(): void {
-    this.editTitle = '';
-    this.editDate = '';
-    this.editDone = false;
-    this.editIndex = 0;
-    this.modalIsVisible = true;
+    if(this.todoTitle === ''){
+      this.message.info('Please input title');
+    }else{
+      this.editTitle = this.todoTitle;
+      this.editDate = '';
+      this.editDone = false;
+      this.editIndex = 0;
+      this.modalIsVisible = true;
+    }
   }
 
   addTodoEvent(data: Object){
@@ -99,7 +103,7 @@ export class DashboardComponent implements OnInit {
     this.editDate = data['date'];
     this.editDone = data['done'];
     this.editIndex = data['index'];
-    this.modalVisible = true;
+    this.modalIsVisible = true;
   }
 
   deleteItem(data: Object) {
