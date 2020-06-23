@@ -45,8 +45,8 @@
 <app-edit-modal
   [title]="editTitle"
   [date]="editDate"
-  [index]="editIndex"
   [done]="editDone"
-  [(isVisible)]="modalVisible"
-  (clickEvent) = "addTodoEvent($event)"
+  [index]="editIndex"
+  [(isVisible)]="modalIsVisible"
+  (clickEvent)="addTodoEvent($event)"
 ></app-edit-modal>
