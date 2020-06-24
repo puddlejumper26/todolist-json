@@ -33,18 +33,23 @@ export class DashboardComponent implements OnInit {
   }
 
   getTodoList(): void {
+    // GET is to check and get element, check the data from http://localhost:3000/todos, and put them into
+    //doneArray and doingArray after the for loop
     this.http
       .get('http://localhost:3000/todos')
       .subscribe((res: Array<Object>) => {
         this.dataArray = res;
         this.doingArray = [];
         this.doneArray = [];
-        for (let i = 0; i < this.dataArray.length; i++) {
+        console.log(3333);
+        for (let i = 0; i < this.dataArray.length; i++) {  // note here is a for loop
           const element: any = this.dataArray[i];
           if (element.done === true) {
             this.doneArray.push(element);
+            console.log(4444);
           } else {
             this.doingArray.push(element);
+            console.log(555);
           }
         }
       });
@@ -52,62 +57,86 @@ export class DashboardComponent implements OnInit {
 
   // Now the function of this is only to open the dialog - edit-modal
   addTodo(data: Object): void {
-    if (this.todoTitle === '') {
-      this.message.info('Please input title');
-    } else {
-      // send the editData object to the server
-      this.editData = {
-        title: this.todoTitle, // to pass the content inside input to the edit-modal
-        date: '',
-        isEdit: true,
-        id: 1,
-        done: false,
-      };
-      console.log(111111, this.editData);
-      this.modalIsVisible = true;
-    }
+    // if (this.todoTitle === '') {
+    //   this.message.info('Please input title');
+    // } else {
+    //   // send the editData object to the server
+    //   this.editData = {
+    //     title: this.todoTitle, // to pass the content inside input to the edit-modal
+    //     date: '',
+    //     isEdit: true,
+    //     id: 1, // now the new input will replace the old input, cause the id is 1
+    //     done: false,
+    //   };
+    //   console.log(111111, this.editData);
+    //   this.modalIsVisible = true;
+    // }
+    this.editData= {};
+    this.modalIsVisible = true;
   }
 
+  //combine with edit-modal clickEvent, clicking confirm and submit the form inside edit-modal
   addTodoEvent(data: Object) {
-    if (data['done'] == true) {
-      this.changeItemNetRequest(data);
-    } else {
-      if (data['isEdit'] == true) {
-        this.changeItemNetRequest(data);
-      } else {
-        this.http.post('http://localhost:3000/todos', data).subscribe((res) => {
+    console.log(77777);
+    // if (data['done'] === true) {
+    //   this.changeItemNetRequest(data);
+    // } else {
+    //   if (data['isEdit'] === true) {
+    //     this.changeItemNetRequest(data);
+    //   } else {
+    //     //data['done'] == false && data['isEdit'] == false
+    //     // POST is to add new element
+    //     this.http.post('http://localhost:3000/todos', data).subscribe(() => {
+    //       this.getTodoList();
+    //     });
+    //   }
+    // }
+    if(data['done'] === false && data['isEdit'] === false){
+      this.http.post('http://localhost:3000/todos', data).subscribe(() => {
+          // after post the new data to localhost:3000/todos then run getTodoList() again
           this.getTodoList();
+          console.log(8888)
         });
-      }
+    }else{
+      // called when there is no change made
+      this.changeItemNetRequest(data);
+      console.log(999, data['idEdit']);
     }
   }
 
   checkItem(data: Object) {
     this.changeItemNetRequest(data);
+    console.log(666);
   }
 
   // modify network request
   changeItemNetRequest(data: Object) {
+    // PUT is to edit element
     this.http
       .put('http://localhost:3000/todos/' + data['id'], data)
-      .subscribe((res) => {
+      .subscribe(() => {
         this.getTodoList();
+        console.log(2222,  data);
       });
   }
 
   editItem(data: Object) {
     this.editData = data;
+    // open the edit-modal
     this.modalIsVisible = true;
   }
 
   deleteItem(data: Object) {
     this.http
       .delete('http://localhost:3000/todos/' + data['id'])
-      .subscribe((res) => {
+      .subscribe(() => {
         this.getTodoList();
       });
   }
 
+  //********************************************
+  // Following is the old code without JSON-SERVER
+  //********************************************
   // getTodoList(): void {
   //   const dataString: string = localStorage.getItem('data');
 
