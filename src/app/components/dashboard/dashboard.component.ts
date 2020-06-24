@@ -50,9 +50,22 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  addTodo(): void {
-    this.editData = {};
-    this.modalIsVisible = true;
+  // Now the function of this is only to open the dialog - edit-modal
+  addTodo(data: Object): void {
+    if (this.todoTitle === '') {
+      this.message.info('Please input title');
+    } else {
+      // send the editData object to the server
+      this.editData = {
+        title: this.todoTitle, // to pass the content inside input to the edit-modal
+        date: '',
+        isEdit: true,
+        id: 1,
+        done: false,
+      };
+      console.log(111111, this.editData);
+      this.modalIsVisible = true;
+    }
   }
 
   addTodoEvent(data: Object) {
